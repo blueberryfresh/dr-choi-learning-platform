@@ -431,6 +431,222 @@ body {
     line-height: 1.6;
 }
 
+/* Enhanced Bulletin Board Styles */
+.category-filter {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.category-filter h3 {
+    margin-bottom: 1rem;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.category-filter h3 i {
+    color: #667eea;
+    margin-right: 10px;
+}
+
+.category-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.category-btn {
+    padding: 8px 16px;
+    border: 2px solid #e1e5e9;
+    border-radius: 25px;
+    background: white;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.category-btn:hover {
+    border-color: #667eea;
+    color: #667eea;
+    transform: translateY(-2px);
+}
+
+.category-btn.active {
+    background: #667eea;
+    border-color: #667eea;
+    color: white;
+}
+
+.category-btn i {
+    margin-right: 6px;
+}
+
+/* Enhanced Form Styles */
+.post-form-container h3 {
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-size: 1.2rem;
+}
+
+.post-form-container h3 i {
+    color: #667eea;
+    margin-right: 10px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: white;
+    transition: border-color 0.3s ease;
+}
+
+.form-group select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+/* Posts Header */
+.posts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.posts-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.posts-header h3 i {
+    color: #667eea;
+    margin-right: 10px;
+}
+
+.posts-stats {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Enhanced Post Styles */
+.post {
+    border-left: 4px solid #e1e5e9;
+    transition: all 0.3s ease;
+}
+
+.post:hover {
+    border-left-color: #667eea;
+    transform: translateX(5px);
+}
+
+.post.machine-learning {
+    border-left-color: #e74c3c;
+}
+
+.post.neural-networks {
+    border-left-color: #9b59b6;
+}
+
+.post.assignments {
+    border-left-color: #f39c12;
+}
+
+.post.projects {
+    border-left-color: #27ae60;
+}
+
+.post.general {
+    border-left-color: #3498db;
+}
+
+.post-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.post-category {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.post-category.machine-learning {
+    background: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+}
+
+.post-category.neural-networks {
+    background: rgba(155, 89, 182, 0.1);
+    color: #9b59b6;
+}
+
+.post-category.assignments {
+    background: rgba(243, 156, 18, 0.1);
+    color: #f39c12;
+}
+
+.post-category.projects {
+    background: rgba(39, 174, 96, 0.1);
+    color: #27ae60;
+}
+
+.post-category.general {
+    background: rgba(52, 152, 219, 0.1);
+    color: #3498db;
+}
+
+/* Loading and Empty States */
+.loading-posts {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+.no-posts-category {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    font-style: italic;
+}
+
+.no-posts-category i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #ccc;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .navbar {
@@ -463,6 +679,25 @@ body {
 
     .post-form-container {
         padding: 1.5rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .category-buttons {
+        justify-content: center;
+    }
+
+    .category-btn {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+
+    .posts-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
     }
 }
 

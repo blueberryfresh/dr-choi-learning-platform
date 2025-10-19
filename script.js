@@ -2,7 +2,8 @@
 const APP_STATE = {
     isAuthenticated: false,
     currentSection: 'materials',
-    posts: []
+    posts: [],
+    currentFilter: 'all'
 };
 
 // Configuration
@@ -10,25 +11,55 @@ const CONFIG = {
     // You can change this password as needed
     accessPassword: 'DrChoi2024!',
     
-    // Sample posts for demonstration
+    // AI Course sample posts for demonstration
     samplePosts: [
         {
             id: 1,
             author: 'Sarah Johnson',
-            content: 'Hi everyone! I found the reading for Chapter 3 really interesting. Has anyone started working on Assignment 1 yet? I\'d love to discuss some of the key concepts.',
+            title: 'Question about Gradient Descent',
+            content: 'Hi everyone! I\'m working through the gradient descent algorithm from this week\'s lecture. Can someone explain why we use the learning rate? What happens if it\'s too high or too low?',
+            category: 'machine-learning',
             timestamp: new Date('2024-10-18T10:30:00'),
         },
         {
             id: 2,
             author: 'Mike Chen',
-            content: 'Dr. Choi, thank you for the excellent lecture yesterday. The examples really helped clarify the complex theories. Looking forward to the next class!',
+            title: 'Neural Network Assignment Help',
+            content: 'I\'m stuck on Assignment 2 - building the feedforward neural network. My loss isn\'t decreasing after epoch 10. Has anyone encountered this issue? Any debugging tips?',
+            category: 'assignments',
             timestamp: new Date('2024-10-17T15:45:00'),
         },
         {
             id: 3,
             author: 'Emily Rodriguez',
-            content: 'Study group forming for the midterm exam! We\'re planning to meet this Saturday at 2 PM in the library. Message me if you\'re interested in joining.',
+            title: 'AI Ethics Discussion',
+            content: 'After today\'s lecture on AI ethics, I\'ve been thinking about bias in machine learning models. How do we ensure our models are fair when the training data itself might be biased?',
+            category: 'general',
             timestamp: new Date('2024-10-16T09:20:00'),
+        },
+        {
+            id: 4,
+            author: 'David Kim',
+            title: 'CNN Architecture Question',
+            content: 'Working on my final project using CNNs for image classification. Should I use ResNet or start with a simpler architecture like LeNet? My dataset has about 10,000 images.',
+            category: 'projects',
+            timestamp: new Date('2024-10-15T14:15:00'),
+        },
+        {
+            id: 5,
+            author: 'Lisa Wang',
+            title: 'Backpropagation Explanation',
+            content: 'Can someone help me understand backpropagation intuitively? I get the math, but I\'m struggling to visualize what\'s actually happening when we update the weights.',
+            category: 'neural-networks',
+            timestamp: new Date('2024-10-14T11:30:00'),
+        },
+        {
+            id: 6,
+            author: 'Alex Thompson',
+            title: 'Study Group - Deep Learning',
+            content: 'Forming a study group for the upcoming deep learning module. We\'ll meet Wednesdays at 6 PM in the CS building. Focus on practical implementations and theory review.',
+            category: 'general',
+            timestamp: new Date('2024-10-13T16:45:00'),
         }
     ]
 };
@@ -43,6 +74,8 @@ const navButtons = document.querySelectorAll('.nav-btn');
 const contentSections = document.querySelectorAll('.content-section');
 const postForm = document.getElementById('post-form');
 const postsContainer = document.getElementById('posts-container');
+const categoryButtons = document.querySelectorAll('.category-btn');
+const postsCount = document.getElementById('posts-count');
 
 // Initialize Application
 document.addEventListener('DOMContentLoaded', function() {
@@ -80,6 +113,11 @@ function setupEventListeners() {
         } else {
             button.addEventListener('click', handleNavigation);
         }
+    });
+    
+    // Category filter buttons
+    categoryButtons.forEach(button => {
+        button.addEventListener('click', handleCategoryFilter);
     });
     
     // Post form
@@ -171,14 +209,32 @@ function showSection(sectionName) {
 }
 
 // Bulletin Board Functions
+function handleCategoryFilter(e) {
+    const category = e.target.closest('.category-btn').dataset.category;
+    
+    // Update active category button
+    categoryButtons.forEach(btn => {
+        btn.classList.remove('active');
+    });
+    e.target.closest('.category-btn').classList.add('active');
+    
+    // Update current filter
+    APP_STATE.currentFilter = category;
+    
+    // Re-render posts with filter
+    renderPosts();
+}
+
 function handleNewPost(e) {
     e.preventDefault();
     
     const studentName = document.getElementById('student-name').value.trim();
+    const postTitle = document.getElementById('post-title').value.trim();
     const postContent = document.getElementById('post-content').value.trim();
+    const postCategory = document.getElementById('post-category').value;
     
-    if (!studentName || !postContent) {
-        alert('Please fill in both your name and message.');
+    if (!studentName || !postContent || !postCategory) {
+        alert('Please fill in your name, message, and select a category.');
         return;
     }
     
@@ -186,7 +242,9 @@ function handleNewPost(e) {
     const newPost = {
         id: Date.now(), // Simple ID generation
         author: studentName,
+        title: postTitle || null,
         content: postContent,
+        category: postCategory,
         timestamp: new Date()
     };
     
@@ -195,7 +253,9 @@ function handleNewPost(e) {
     
     // Clear form
     document.getElementById('student-name').value = '';
+    document.getElementById('post-title').value = '';
     document.getElementById('post-content').value = '';
+    document.getElementById('post-category').value = '';
     
     // Re-render posts
     renderPosts();
@@ -207,28 +267,65 @@ function handleNewPost(e) {
 function renderPosts() {
     postsContainer.innerHTML = '';
     
-    if (APP_STATE.posts.length === 0) {
+    // Filter posts based on current filter
+    let filteredPosts = APP_STATE.posts;
+    if (APP_STATE.currentFilter !== 'all') {
+        filteredPosts = APP_STATE.posts.filter(post => post.category === APP_STATE.currentFilter);
+    }
+    
+    // Update posts count
+    updatePostsCount(filteredPosts.length, APP_STATE.posts.length);
+    
+    if (filteredPosts.length === 0) {
+        const emptyMessage = APP_STATE.currentFilter === 'all' 
+            ? 'No messages yet. Be the first to post!'
+            : `No posts in this category yet. Be the first to share something about ${getCategoryDisplayName(APP_STATE.currentFilter)}!`;
+            
         postsContainer.innerHTML = `
-            <div class="no-posts">
-                <p>No messages yet. Be the first to post!</p>
+            <div class="no-posts-category">
+                <i class="fas fa-comments"></i>
+                <p>${emptyMessage}</p>
             </div>
         `;
         return;
     }
     
-    APP_STATE.posts.forEach(post => {
+    filteredPosts.forEach(post => {
         const postElement = createPostElement(post);
         postsContainer.appendChild(postElement);
     });
 }
 
+function updatePostsCount(filtered, total) {
+    if (postsCount) {
+        const filterText = APP_STATE.currentFilter === 'all' ? 'all posts' : getCategoryDisplayName(APP_STATE.currentFilter);
+        postsCount.textContent = `Showing ${filtered} of ${total} posts in ${filterText}`;
+    }
+}
+
+function getCategoryDisplayName(category) {
+    const categoryNames = {
+        'machine-learning': 'Machine Learning',
+        'neural-networks': 'Neural Networks',
+        'assignments': 'Assignments',
+        'projects': 'Projects',
+        'general': 'General Q&A'
+    };
+    return categoryNames[category] || category;
+}
+
 function createPostElement(post) {
     const postDiv = document.createElement('div');
-    postDiv.className = 'post';
+    postDiv.className = `post ${post.category || ''}`;
     
     const formattedDate = formatDate(post.timestamp);
+    const categoryDisplay = getCategoryDisplayName(post.category || 'general');
+    
+    const titleHtml = post.title ? `<div class="post-title">${escapeHtml(post.title)}</div>` : '';
     
     postDiv.innerHTML = `
+        <div class="post-category ${post.category || 'general'}">${categoryDisplay}</div>
+        ${titleHtml}
         <div class="post-header">
             <span class="post-author">${escapeHtml(post.author)}</span>
             <span class="post-date">${formattedDate}</span>
