@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Stephen Choi - Learning Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-container" class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <i class="fas fa-graduation-cap"></i>
+                <h1>Dr. Stephen Choi</h1>
+                <h2>Learning Platform</h2>
+            </div>
+            <form id="login-form" class="login-form">
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Enter access password" required>
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Access Platform
+                </button>
+            </form>
+            <div id="error-message" class="error-message"></div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="main-app" class="main-app hidden">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Dr. Stephen Choi - Learning Platform</span>
+            </div>
+            <div class="nav-menu">
+                <button class="nav-btn active" data-section="materials">
+                    <i class="fas fa-book"></i>
+                    Course Materials
+                </button>
+                <button class="nav-btn" data-section="bulletin">
+                    <i class="fas fa-comments"></i>
+                    Bulletin Board
+                </button>
+                <button class="nav-btn logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- Course Materials Section -->
+        <section id="materials-section" class="content-section active">
+            <div class="section-header">
+                <h2><i class="fas fa-book"></i> Course Materials</h2>
+                <p>Access all course resources, lectures, and assignments</p>
+            </div>
+            
+            <div class="materials-grid">
+                <div class="material-category">
+                    <h3><i class="fas fa-video"></i> Lectures</h3>
+                    <div class="material-list">
+                        <div class="material-item">
+                            <i class="fas fa-play-circle"></i>
+                            <div class="material-info">
+                                <h4>Introduction to Course</h4>
+                                <p>Course overview and objectives</p>
+                                <span class="material-date">Week 1</span>
+                            </div>
+                        </div>
+                        <div class="material-item">
+                            <i class="fas fa-play-circle"></i>
+                            <div class="material-info">
+                                <h4>Fundamental Concepts</h4>
+                                <p>Core principles and theories</p>
+                                <span class="material-date">Week 2</span>
+                            </div>
+                        </div>
+                        <div class="material-item">
+                            <i class="fas fa-play-circle"></i>
+                            <div class="material-info">
+                                <h4>Advanced Topics</h4>
+                                <p>In-depth analysis and applications</p>
+                                <span class="material-date">Week 3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="material-category">
+                    <h3><i class="fas fa-file-pdf"></i> Documents</h3>
+                    <div class="material-list">
+                        <div class="material-item">
+                            <i class="fas fa-file-pdf"></i>
+                            <div class="material-info">
+                                <h4>Course Syllabus</h4>
+                                <p>Complete course outline and schedule</p>
+                                <span class="material-date">PDF</span>
+                            </div>
+                        </div>
+                        <div class="material-item">
+                            <i class="fas fa-file-pdf"></i>
+                            <div class="material-info">
+                                <h4>Reading List</h4>
+                                <p>Required and recommended readings</p>
+                                <span class="material-date">PDF</span>
+                            </div>
+                        </div>
+                        <div class="material-item">
+                            <i class="fas fa-file-pdf"></i>
+                            <div class="material-info">
+                                <h4>Study Guide</h4>
+                                <p>Exam preparation materials</p>
+                                <span class="material-date">PDF</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="material-category">
+                    <h3><i class="fas fa-tasks"></i> Assignments</h3>
+                    <div class="material-list">
+                        <div class="material-item">
+                            <i class="fas fa-clipboard-list"></i>
+                            <div class="material-info">
+                                <h4>Assignment 1</h4>
+                                <p>Research paper on fundamental concepts</p>
+                                <span class="material-date">Due: Oct 25</span>
+                            </div>
+                        </div>
+                        <div class="material-item">
+                            <i class="fas fa-clipboard-list"></i>
+                            <div class="material-info">
+                                <h4>Assignment 2</h4>
+                                <p>Case study analysis</p>
+                                <span class="material-date">Due: Nov 8</span>
+                            </div>
+                        </div>
+                        <div class="material-item">
+                            <i class="fas fa-clipboard-list"></i>
+                            <div class="material-info">
+                                <h4>Final Project</h4>
+                                <p>Comprehensive research project</p>
+                                <span class="material-date">Due: Dec 15</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bulletin Board Section -->
+        <section id="bulletin-section" class="content-section">
+            <div class="section-header">
+                <h2><i class="fas fa-comments"></i> Student Bulletin Board</h2>
+                <p>Connect with classmates and share ideas</p>
+            </div>
+
+            <div class="bulletin-container">
+                <div class="post-form-container">
+                    <form id="post-form" class="post-form">
+                        <div class="form-group">
+                            <input type="text" id="student-name" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="post-content" placeholder="Share your thoughts, questions, or announcements..." required></textarea>
+                        </div>
+                        <button type="submit" class="post-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            Post Message
+                        </button>
+                    </form>
+                </div>
+
+                <div class="posts-container" id="posts-container">
+                    <!-- Sample posts will be loaded here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
