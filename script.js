@@ -10,7 +10,7 @@ const APP_STATE = {
 // Configuration
 const CONFIG = {
     // Main platform password
-    accessPassword: 'DrChoi2024!',
+    accessPassword: 'DrChoiAI2025!',
     // Instructor password for bulletin board access
     instructorPassword: 'DrChoiInstructor2025!',
     
