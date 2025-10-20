@@ -11,55 +11,71 @@ const CONFIG = {
     // You can change this password as needed
     accessPassword: 'DrChoi2024!',
     
-    // AI Course sample posts for demonstration
+    // Casual student messages for demonstration
     samplePosts: [
         {
             id: 1,
-            author: 'Sarah Johnson',
-            title: 'Question about Gradient Descent',
-            content: 'Hi everyone! I\'m working through the gradient descent algorithm from this week\'s lecture. Can someone explain why we use the learning rate? What happens if it\'s too high or too low?',
-            category: 'machine-learning',
+            author: 'Sarah J.',
+            title: 'Mind = Blown 🤯',
+            content: 'Dr. Choi, that lecture on neural networks today was INSANE! I finally get why they call it "deep" learning. My brain feels like it just leveled up! Thanks for making it so clear 🧠✨',
+            category: 'course-chat',
             timestamp: new Date('2024-10-18T10:30:00'),
         },
         {
             id: 2,
-            author: 'Mike Chen',
-            title: 'Neural Network Assignment Help',
-            content: 'I\'m stuck on Assignment 2 - building the feedforward neural network. My loss isn\'t decreasing after epoch 10. Has anyone encountered this issue? Any debugging tips?',
-            category: 'assignments',
+            author: 'Mike C.',
+            title: 'ChatGPT vs Our Models',
+            content: 'Hey Dr. Choi! I was playing around with ChatGPT and started wondering - how does it compare to the models we\'re building in class? Are we basically building mini versions of GPT? This stuff is so cool! 🤖',
+            category: 'cool-stuff',
             timestamp: new Date('2024-10-17T15:45:00'),
         },
         {
             id: 3,
-            author: 'Emily Rodriguez',
-            title: 'AI Ethics Discussion',
-            content: 'After today\'s lecture on AI ethics, I\'ve been thinking about bias in machine learning models. How do we ensure our models are fair when the training data itself might be biased?',
-            category: 'general',
+            author: 'Emily R.',
+            title: '',
+            content: 'Just wanted to say hi and that I\'m really enjoying the class! Your teaching style makes AI feel approachable instead of scary. Keep being awesome! 😊',
+            category: 'just-saying-hi',
             timestamp: new Date('2024-10-16T09:20:00'),
         },
         {
             id: 4,
-            author: 'David Kim',
-            title: 'CNN Architecture Question',
-            content: 'Working on my final project using CNNs for image classification. Should I use ResNet or start with a simpler architecture like LeNet? My dataset has about 10,000 images.',
-            category: 'projects',
+            author: 'David K.',
+            title: 'Assignment 2 Struggles',
+            content: 'Dr. Choi, I\'m stuck on the backprop part of Assignment 2. My gradients keep exploding and I have no idea why 😅 Any hints? I\'ve been staring at this code for hours!',
+            category: 'help-me',
             timestamp: new Date('2024-10-15T14:15:00'),
         },
         {
             id: 5,
-            author: 'Lisa Wang',
-            title: 'Backpropagation Explanation',
-            content: 'Can someone help me understand backpropagation intuitively? I get the math, but I\'m struggling to visualize what\'s actually happening when we update the weights.',
-            category: 'neural-networks',
+            author: 'Lisa W.',
+            title: 'Random AI Shower Thought',
+            content: 'What if AI models dream? Like, do they have some kind of "unconscious" processing happening when they\'re not actively predicting? This keeps me up at night lol 🌙',
+            category: 'random-thoughts',
             timestamp: new Date('2024-10-14T11:30:00'),
         },
         {
             id: 6,
-            author: 'Alex Thompson',
-            title: 'Study Group - Deep Learning',
-            content: 'Forming a study group for the upcoming deep learning module. We\'ll meet Wednesdays at 6 PM in the CS building. Focus on practical implementations and theory review.',
-            category: 'general',
+            author: 'Alex T.',
+            title: 'AI Art is Wild!',
+            content: 'Dr. Choi, have you seen the latest AI art generators? I made some crazy images with Midjourney and it got me thinking about creativity and AI. Are we teaching machines to be artists? 🎨',
+            category: 'cool-stuff',
             timestamp: new Date('2024-10-13T16:45:00'),
+        },
+        {
+            id: 7,
+            author: 'Jessica M.',
+            title: '',
+            content: 'Coffee chat after class was great! Thanks for taking the time to explain overfitting again. You\'re the best prof! ☕️',
+            category: 'just-saying-hi',
+            timestamp: new Date('2024-10-12T12:20:00'),
+        },
+        {
+            id: 8,
+            author: 'Ryan P.',
+            title: 'Future Career Thoughts',
+            content: 'This class is making me seriously consider switching to AI/ML for my career. Is the job market as crazy competitive as people say? Any advice for someone just starting out? 🚀',
+            category: 'random-thoughts',
+            timestamp: new Date('2024-10-11T18:30:00'),
         }
     ]
 };
@@ -305,11 +321,11 @@ function updatePostsCount(filtered, total) {
 
 function getCategoryDisplayName(category) {
     const categoryNames = {
-        'machine-learning': 'Machine Learning',
-        'neural-networks': 'Neural Networks',
-        'assignments': 'Assignments',
-        'projects': 'Projects',
-        'general': 'General Q&A'
+        'course-chat': 'Course Chat',
+        'cool-stuff': 'Cool AI Stuff',
+        'help-me': 'Help Me Out',
+        'random-thoughts': 'Random Thoughts',
+        'just-saying-hi': 'Just Saying Hi'
     };
     return categoryNames[category] || category;
 }

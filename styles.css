@@ -566,24 +566,24 @@ body {
     transform: translateX(5px);
 }
 
-.post.machine-learning {
+.post.course-chat {
+    border-left-color: #3498db;
+}
+
+.post.cool-stuff {
     border-left-color: #e74c3c;
 }
 
-.post.neural-networks {
-    border-left-color: #9b59b6;
-}
-
-.post.assignments {
+.post.help-me {
     border-left-color: #f39c12;
 }
 
-.post.projects {
-    border-left-color: #27ae60;
+.post.random-thoughts {
+    border-left-color: #9b59b6;
 }
 
-.post.general {
-    border-left-color: #3498db;
+.post.just-saying-hi {
+    border-left-color: #27ae60;
 }
 
 .post-title {
@@ -602,29 +602,29 @@ body {
     margin-bottom: 10px;
 }
 
-.post-category.machine-learning {
+.post-category.course-chat {
+    background: rgba(52, 152, 219, 0.1);
+    color: #3498db;
+}
+
+.post-category.cool-stuff {
     background: rgba(231, 76, 60, 0.1);
     color: #e74c3c;
 }
 
-.post-category.neural-networks {
-    background: rgba(155, 89, 182, 0.1);
-    color: #9b59b6;
-}
-
-.post-category.assignments {
+.post-category.help-me {
     background: rgba(243, 156, 18, 0.1);
     color: #f39c12;
 }
 
-.post-category.projects {
-    background: rgba(39, 174, 96, 0.1);
-    color: #27ae60;
+.post-category.random-thoughts {
+    background: rgba(155, 89, 182, 0.1);
+    color: #9b59b6;
 }
 
-.post-category.general {
-    background: rgba(52, 152, 219, 0.1);
-    color: #3498db;
+.post-category.just-saying-hi {
+    background: rgba(39, 174, 96, 0.1);
+    color: #27ae60;
 }
 
 /* Loading and Empty States */

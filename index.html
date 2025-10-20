@@ -44,8 +44,8 @@
                     Course Materials
                 </button>
                 <button class="nav-btn" data-section="bulletin">
-                    <i class="fas fa-comments"></i>
-                    Bulletin Board
+                    <i class="fas fa-heart"></i>
+                    Student Chat
                 </button>
                 <button class="nav-btn logout-btn">
                     <i class="fas fa-sign-out-alt"></i>
@@ -157,81 +157,81 @@
         <!-- Bulletin Board Section -->
         <section id="bulletin-section" class="content-section">
             <div class="section-header">
-                <h2><i class="fas fa-comments"></i> AI Course Discussion Board</h2>
-                <p>Share insights, ask questions, and collaborate on AI concepts</p>
+                <h2><i class="fas fa-heart"></i> Student Chat with Dr. Choi</h2>
+                <p>Drop me your thoughts, cool ideas, questions, or just say hi! 😊</p>
             </div>
 
             <div class="bulletin-container">
                 <!-- Category Filter -->
                 <div class="category-filter">
-                    <h3><i class="fas fa-filter"></i> Discussion Categories</h3>
+                    <h3><i class="fas fa-tags"></i> What's on your mind?</h3>
                     <div class="category-buttons">
                         <button class="category-btn active" data-category="all">
-                            <i class="fas fa-comments"></i> All Posts
+                            <i class="fas fa-comments"></i> Everything
                         </button>
-                        <button class="category-btn" data-category="machine-learning">
-                            <i class="fas fa-robot"></i> Machine Learning
+                        <button class="category-btn" data-category="course-chat">
+                            <i class="fas fa-graduation-cap"></i> Course Chat
                         </button>
-                        <button class="category-btn" data-category="neural-networks">
-                            <i class="fas fa-brain"></i> Neural Networks
+                        <button class="category-btn" data-category="cool-stuff">
+                            <i class="fas fa-star"></i> Cool AI Stuff
                         </button>
-                        <button class="category-btn" data-category="assignments">
-                            <i class="fas fa-tasks"></i> Assignments
+                        <button class="category-btn" data-category="help-me">
+                            <i class="fas fa-hands-helping"></i> Help Me Out
                         </button>
-                        <button class="category-btn" data-category="projects">
-                            <i class="fas fa-code"></i> Projects
+                        <button class="category-btn" data-category="random-thoughts">
+                            <i class="fas fa-lightbulb"></i> Random Thoughts
                         </button>
-                        <button class="category-btn" data-category="general">
-                            <i class="fas fa-question-circle"></i> General Q&A
+                        <button class="category-btn" data-category="just-saying-hi">
+                            <i class="fas fa-wave-hand"></i> Just Saying Hi
                         </button>
                     </div>
                 </div>
 
                 <!-- Post Form -->
                 <div class="post-form-container">
-                    <h3><i class="fas fa-plus-circle"></i> Share Your Thoughts</h3>
+                    <h3><i class="fas fa-edit"></i> Drop a Message for Dr. Choi!</h3>
                     <form id="post-form" class="post-form">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="student-name">Your Name</label>
-                                <input type="text" id="student-name" placeholder="Enter your name" required>
+                                <input type="text" id="student-name" placeholder="What should I call you?" required>
                             </div>
                             <div class="form-group">
-                                <label for="post-category">Category</label>
+                                <label for="post-category">Vibe Check</label>
                                 <select id="post-category" required>
-                                    <option value="">Select a category</option>
-                                    <option value="machine-learning">Machine Learning</option>
-                                    <option value="neural-networks">Neural Networks</option>
-                                    <option value="assignments">Assignments</option>
-                                    <option value="projects">Projects</option>
-                                    <option value="general">General Q&A</option>
+                                    <option value="">What's this about?</option>
+                                    <option value="course-chat">Course Chat</option>
+                                    <option value="cool-stuff">Cool AI Stuff</option>
+                                    <option value="help-me">Help Me Out</option>
+                                    <option value="random-thoughts">Random Thoughts</option>
+                                    <option value="just-saying-hi">Just Saying Hi</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="post-title">Title (Optional)</label>
-                            <input type="text" id="post-title" placeholder="Brief title for your post">
+                            <label for="post-title">Subject (Optional)</label>
+                            <input type="text" id="post-title" placeholder="What's this about? (optional)">
                         </div>
                         <div class="form-group">
-                            <label for="post-content">Message</label>
-                            <textarea id="post-content" placeholder="Share your thoughts, questions, insights about AI concepts, or discuss course materials..." required></textarea>
+                            <label for="post-content">Your Message</label>
+                            <textarea id="post-content" placeholder="Hey Dr. Choi! Share whatever's on your mind - questions, cool discoveries, random thoughts, or just drop by to say hello! 🚀" required></textarea>
                         </div>
                         <button type="submit" class="post-btn">
                             <i class="fas fa-paper-plane"></i>
-                            Post to Discussion Board
+                            Send Message
                         </button>
                     </form>
                 </div>
 
                 <!-- Posts Container -->
                 <div class="posts-header">
-                    <h3><i class="fas fa-comments"></i> Recent Discussions</h3>
+                    <h3><i class="fas fa-chat-dots"></i> Recent Messages</h3>
                     <div class="posts-stats">
-                        <span id="posts-count">Loading posts...</span>
+                        <span id="posts-count">Loading messages...</span>
                     </div>
                 </div>
                 <div class="posts-container" id="posts-container">
-                    <!-- AI course posts will be loaded here -->
+                    <!-- Student messages will be loaded here -->
                 </div>
             </div>
         </section>
