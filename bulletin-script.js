@@ -7,8 +7,10 @@ const BULLETIN_STATE = {
 
 // Configuration for Bulletin Board
 const BULLETIN_CONFIG = {
-    // Bulletin board specific password
-    accessPassword: 'FresnoStateAI@2019',
+    // Student bulletin board password
+    studentPassword: 'FresnoStateAI@2019',
+    // Instructor password for full access
+    instructorPassword: 'DrChoiInstructor2025!',
     
     // Student bulletin board messages for demonstration
     samplePosts: [
@@ -75,9 +77,20 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeBulletinApp() {
     // Check if user is already authenticated (using sessionStorage)
     const isAuthenticated = sessionStorage.getItem('bulletin-authenticated') === 'true';
+    const userType = sessionStorage.getItem('bulletin-user-type') || 'student';
     
     if (isAuthenticated) {
+        // Restore user type and view
+        BULLETIN_STATE.currentView = userType;
         showBulletinApp();
+        
+        // Update view button to match restored state
+        bulletinViewButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.view === userType) {
+                btn.classList.add('active');
+            }
+        });
     } else {
         showBulletinLogin();
     }
@@ -114,12 +127,42 @@ function handleBulletinLogin(e) {
     
     const enteredPassword = bulletinPasswordInput.value.trim();
     
-    if (enteredPassword === BULLETIN_CONFIG.accessPassword) {
-        // Successful login
+    if (enteredPassword === BULLETIN_CONFIG.instructorPassword) {
+        // Instructor login - set instructor view
         BULLETIN_STATE.isAuthenticated = true;
+        BULLETIN_STATE.currentView = 'instructor';
         sessionStorage.setItem('bulletin-authenticated', 'true');
+        sessionStorage.setItem('bulletin-user-type', 'instructor');
         showBulletinApp();
         clearBulletinError();
+        
+        // Update view button to show instructor view is active
+        bulletinViewButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.view === 'instructor') {
+                btn.classList.add('active');
+            }
+        });
+        
+        renderBulletinPosts();
+    } else if (enteredPassword === BULLETIN_CONFIG.studentPassword) {
+        // Student login - set student view
+        BULLETIN_STATE.isAuthenticated = true;
+        BULLETIN_STATE.currentView = 'student';
+        sessionStorage.setItem('bulletin-authenticated', 'true');
+        sessionStorage.setItem('bulletin-user-type', 'student');
+        showBulletinApp();
+        clearBulletinError();
+        
+        // Update view button to show student view is active
+        bulletinViewButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.view === 'student') {
+                btn.classList.add('active');
+            }
+        });
+        
+        renderBulletinPosts();
     } else {
         // Failed login
         showBulletinError('Incorrect password. Please contact Dr. Stephen Choi for access.');
@@ -130,7 +173,9 @@ function handleBulletinLogin(e) {
 
 function handleBulletinLogout() {
     BULLETIN_STATE.isAuthenticated = false;
+    BULLETIN_STATE.currentView = 'student'; // Reset to default
     sessionStorage.removeItem('bulletin-authenticated');
+    sessionStorage.removeItem('bulletin-user-type');
     showBulletinLogin();
     bulletinPasswordInput.value = '';
 }

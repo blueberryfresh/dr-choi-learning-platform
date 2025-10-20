@@ -9,8 +9,10 @@ const APP_STATE = {
 
 // Configuration
 const CONFIG = {
-    // You can change this password as needed
+    // Main platform password
     accessPassword: 'DrChoi2024!',
+    // Instructor password for bulletin board access
+    instructorPassword: 'DrChoiInstructor2025!',
     
     // Student bulletin board messages for demonstration
     samplePosts: [
@@ -79,9 +81,20 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeApp() {
     // Check if user is already authenticated (using sessionStorage)
     const isAuthenticated = sessionStorage.getItem('authenticated') === 'true';
+    const userType = sessionStorage.getItem('user-type') || 'student';
     
     if (isAuthenticated) {
+        // Restore user type and view
+        APP_STATE.currentView = userType;
         showMainApp();
+        
+        // Update view button to match restored state
+        viewButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.view === userType) {
+                btn.classList.add('active');
+            }
+        });
     } else {
         showLogin();
     }
@@ -131,12 +144,42 @@ function handleLogin(e) {
     
     const enteredPassword = passwordInput.value.trim();
     
-    if (enteredPassword === CONFIG.accessPassword) {
-        // Successful login
+    if (enteredPassword === CONFIG.instructorPassword) {
+        // Instructor login - set instructor view for bulletin
         APP_STATE.isAuthenticated = true;
+        APP_STATE.currentView = 'instructor';
         sessionStorage.setItem('authenticated', 'true');
+        sessionStorage.setItem('user-type', 'instructor');
         showMainApp();
         clearError();
+        
+        // Update view button to show instructor view is active
+        viewButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.view === 'instructor') {
+                btn.classList.add('active');
+            }
+        });
+        
+        renderPosts();
+    } else if (enteredPassword === CONFIG.accessPassword) {
+        // Regular login - set student view for bulletin
+        APP_STATE.isAuthenticated = true;
+        APP_STATE.currentView = 'student';
+        sessionStorage.setItem('authenticated', 'true');
+        sessionStorage.setItem('user-type', 'student');
+        showMainApp();
+        clearError();
+        
+        // Update view button to show student view is active
+        viewButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.view === 'student') {
+                btn.classList.add('active');
+            }
+        });
+        
+        renderPosts();
     } else {
         // Failed login
         showError('Incorrect password. Please contact Dr. Stephen Choi for access.');
@@ -147,7 +190,9 @@ function handleLogin(e) {
 
 function handleLogout() {
     APP_STATE.isAuthenticated = false;
+    APP_STATE.currentView = 'student'; // Reset to default
     sessionStorage.removeItem('authenticated');
+    sessionStorage.removeItem('user-type');
     showLogin();
     passwordInput.value = '';
 }

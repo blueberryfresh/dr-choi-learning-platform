@@ -643,6 +643,30 @@ body {
     margin-right: 6px;
 }
 
+.login-btn:hover {
+    background: linear-gradient(135deg, #5a67d8, #667eea);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.login-hint {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.login-hint p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.login-hint strong {
+    color: #333;
+}
+
 /* Enhanced Post Styles */
 .post {
     border-left: 4px solid #e1e5e9;
