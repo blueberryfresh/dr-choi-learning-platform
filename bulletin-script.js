@@ -1,7 +1,8 @@
 // Application State for Bulletin Board
 const BULLETIN_STATE = {
     isAuthenticated: false,
-    posts: []
+    posts: [],
+    currentView: 'student' // 'student' or 'instructor'
 };
 
 // Configuration for Bulletin Board
@@ -64,6 +65,7 @@ const bulletinPostForm = document.getElementById('bulletin-post-form');
 const bulletinPostsContainer = document.getElementById('bulletin-posts-container');
 const bulletinPostsCount = document.getElementById('bulletin-posts-count');
 const bulletinLogoutBtn = document.getElementById('bulletin-logout-btn');
+const bulletinViewButtons = document.querySelectorAll('.view-btn');
 
 // Initialize Application
 document.addEventListener('DOMContentLoaded', function() {
@@ -96,6 +98,11 @@ function setupBulletinEventListeners() {
     
     // Logout button
     bulletinLogoutBtn.addEventListener('click', handleBulletinLogout);
+    
+    // View toggle buttons
+    bulletinViewButtons.forEach(button => {
+        button.addEventListener('click', handleBulletinViewToggle);
+    });
     
     // Post form
     bulletinPostForm.addEventListener('submit', handleBulletinNewPost);
@@ -150,6 +157,22 @@ function clearBulletinError() {
 }
 
 // Bulletin Board Functions
+function handleBulletinViewToggle(e) {
+    const targetView = e.target.closest('.view-btn').dataset.view;
+    
+    // Update active view button
+    bulletinViewButtons.forEach(btn => {
+        btn.classList.remove('active');
+    });
+    e.target.closest('.view-btn').classList.add('active');
+    
+    // Update current view
+    BULLETIN_STATE.currentView = targetView;
+    
+    // Re-render posts with new view
+    renderBulletinPosts();
+}
+
 function handleBulletinNewPost(e) {
     e.preventDefault();
     
@@ -225,27 +248,35 @@ function updateBulletinPostsCount(total) {
 
 function createBulletinPostElement(post) {
     const postDiv = document.createElement('div');
-    postDiv.className = 'post';
+    postDiv.className = `post ${BULLETIN_STATE.currentView}-view`;
     
     const formattedDate = formatBulletinDate(post.timestamp);
-    const titleHtml = post.title ? `<div class="post-title">${escapeHtml(post.title)}</div>` : '';
     
-    // Create course info display
-    const courseInfo = post.schoolYear && post.semester && post.courseName 
-        ? `${post.schoolYear} ${post.semester} - ${post.courseName}`
-        : 'Course info not available';
-    
-    postDiv.innerHTML = `
-        ${titleHtml}
-        <div class="post-header">
-            <div class="post-author-info">
-                <span class="post-author">${escapeHtml(post.author)}</span>
-                <span class="post-course-info">${escapeHtml(courseInfo)}</span>
+    if (BULLETIN_STATE.currentView === 'instructor') {
+        // Instructor view: Show all details
+        const titleHtml = post.title ? `<div class="post-title">${escapeHtml(post.title)}</div>` : '';
+        const courseInfo = post.schoolYear && post.semester && post.courseName 
+            ? `${post.schoolYear} ${post.semester} - ${post.courseName}`
+            : 'Course info not available';
+        
+        postDiv.innerHTML = `
+            ${titleHtml}
+            <div class="post-header">
+                <div class="post-author-info">
+                    <span class="post-author">${escapeHtml(post.author)}</span>
+                    <span class="post-course-info">${escapeHtml(courseInfo)}</span>
+                </div>
+                <span class="post-date">${formattedDate}</span>
             </div>
-            <span class="post-date">${formattedDate}</span>
-        </div>
-        <div class="post-content">${escapeHtml(post.content)}</div>
-    `;
+            <div class="post-content">${escapeHtml(post.content)}</div>
+        `;
+    } else {
+        // Student view: Show only message content
+        postDiv.innerHTML = `
+            <div class="post-content-only">${escapeHtml(post.content)}</div>
+            <div class="post-date-simple">${formattedDate}</div>
+        `;
+    }
     
     return postDiv;
 }

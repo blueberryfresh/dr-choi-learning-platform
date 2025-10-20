@@ -3,7 +3,8 @@ const APP_STATE = {
     isAuthenticated: false,
     currentSection: 'materials',
     posts: [],
-    currentFilter: 'all'
+    currentFilter: 'all',
+    currentView: 'student' // 'student' or 'instructor'
 };
 
 // Configuration
@@ -68,6 +69,7 @@ const postForm = document.getElementById('post-form');
 const postsContainer = document.getElementById('posts-container');
 // Category buttons removed
 const postsCount = document.getElementById('posts-count');
+const viewButtons = document.querySelectorAll('.view-btn');
 
 // Initialize Application
 document.addEventListener('DOMContentLoaded', function() {
@@ -107,7 +109,10 @@ function setupEventListeners() {
         }
     });
     
-    // Category filter buttons removed - no longer needed
+    // View toggle buttons
+    viewButtons.forEach(button => {
+        button.addEventListener('click', handleViewToggle);
+    });
     
     // Post form
     postForm.addEventListener('submit', handleNewPost);
@@ -198,6 +203,21 @@ function showSection(sectionName) {
 }
 
 // Bulletin Board Functions
+function handleViewToggle(e) {
+    const targetView = e.target.closest('.view-btn').dataset.view;
+    
+    // Update active view button
+    viewButtons.forEach(btn => {
+        btn.classList.remove('active');
+    });
+    e.target.closest('.view-btn').classList.add('active');
+    
+    // Update current view
+    APP_STATE.currentView = targetView;
+    
+    // Re-render posts with new view
+    renderPosts();
+}
 
 function handleNewPost(e) {
     e.preventDefault();
@@ -276,27 +296,35 @@ function updatePostsCount(filtered, total) {
 
 function createPostElement(post) {
     const postDiv = document.createElement('div');
-    postDiv.className = 'post';
+    postDiv.className = `post ${APP_STATE.currentView}-view`;
     
     const formattedDate = formatDate(post.timestamp);
-    const titleHtml = post.title ? `<div class="post-title">${escapeHtml(post.title)}</div>` : '';
     
-    // Create course info display
-    const courseInfo = post.schoolYear && post.semester && post.courseName 
-        ? `${post.schoolYear} ${post.semester} - ${post.courseName}`
-        : 'Course info not available';
-    
-    postDiv.innerHTML = `
-        ${titleHtml}
-        <div class="post-header">
-            <div class="post-author-info">
-                <span class="post-author">${escapeHtml(post.author)}</span>
-                <span class="post-course-info">${escapeHtml(courseInfo)}</span>
+    if (APP_STATE.currentView === 'instructor') {
+        // Instructor view: Show all details
+        const titleHtml = post.title ? `<div class="post-title">${escapeHtml(post.title)}</div>` : '';
+        const courseInfo = post.schoolYear && post.semester && post.courseName 
+            ? `${post.schoolYear} ${post.semester} - ${post.courseName}`
+            : 'Course info not available';
+        
+        postDiv.innerHTML = `
+            ${titleHtml}
+            <div class="post-header">
+                <div class="post-author-info">
+                    <span class="post-author">${escapeHtml(post.author)}</span>
+                    <span class="post-course-info">${escapeHtml(courseInfo)}</span>
+                </div>
+                <span class="post-date">${formattedDate}</span>
             </div>
-            <span class="post-date">${formattedDate}</span>
-        </div>
-        <div class="post-content">${escapeHtml(post.content)}</div>
-    `;
+            <div class="post-content">${escapeHtml(post.content)}</div>
+        `;
+    } else {
+        // Student view: Show only message content
+        postDiv.innerHTML = `
+            <div class="post-content-only">${escapeHtml(post.content)}</div>
+            <div class="post-date-simple">${formattedDate}</div>
+        `;
+    }
     
     return postDiv;
 }
