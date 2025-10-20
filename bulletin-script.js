@@ -1,15 +1,13 @@
-// Application State
-const APP_STATE = {
+// Application State for Bulletin Board
+const BULLETIN_STATE = {
     isAuthenticated: false,
-    currentSection: 'materials',
-    posts: [],
-    currentFilter: 'all'
+    posts: []
 };
 
-// Configuration
-const CONFIG = {
-    // You can change this password as needed
-    accessPassword: 'DrChoi2024!',
+// Configuration for Bulletin Board
+const BULLETIN_CONFIG = {
+    // Bulletin board specific password
+    accessPassword: 'FresnoStateAI@2019',
     
     // Student bulletin board messages for demonstration
     samplePosts: [
@@ -57,157 +55,110 @@ const CONFIG = {
 };
 
 // DOM Elements
-const loginContainer = document.getElementById('login-container');
-const mainApp = document.getElementById('main-app');
-const loginForm = document.getElementById('login-form');
-const passwordInput = document.getElementById('password');
-const errorMessage = document.getElementById('error-message');
-const navButtons = document.querySelectorAll('.nav-btn');
-const contentSections = document.querySelectorAll('.content-section');
-const postForm = document.getElementById('post-form');
-const postsContainer = document.getElementById('posts-container');
-// Category buttons removed
-const postsCount = document.getElementById('posts-count');
+const bulletinLoginContainer = document.getElementById('bulletin-login-container');
+const bulletinApp = document.getElementById('bulletin-app');
+const bulletinLoginForm = document.getElementById('bulletin-login-form');
+const bulletinPasswordInput = document.getElementById('bulletin-password');
+const bulletinErrorMessage = document.getElementById('bulletin-error-message');
+const bulletinPostForm = document.getElementById('bulletin-post-form');
+const bulletinPostsContainer = document.getElementById('bulletin-posts-container');
+const bulletinPostsCount = document.getElementById('bulletin-posts-count');
+const bulletinLogoutBtn = document.getElementById('bulletin-logout-btn');
 
 // Initialize Application
 document.addEventListener('DOMContentLoaded', function() {
-    initializeApp();
+    initializeBulletinApp();
 });
 
-function initializeApp() {
+function initializeBulletinApp() {
     // Check if user is already authenticated (using sessionStorage)
-    const isAuthenticated = sessionStorage.getItem('authenticated') === 'true';
+    const isAuthenticated = sessionStorage.getItem('bulletin-authenticated') === 'true';
     
     if (isAuthenticated) {
-        showMainApp();
+        showBulletinApp();
     } else {
-        showLogin();
+        showBulletinLogin();
     }
     
     // Load sample posts
-    APP_STATE.posts = [...CONFIG.samplePosts];
+    BULLETIN_STATE.posts = [...BULLETIN_CONFIG.samplePosts];
     
     // Setup event listeners
-    setupEventListeners();
+    setupBulletinEventListeners();
     
     // Render initial content
-    renderPosts();
+    renderBulletinPosts();
 }
 
-function setupEventListeners() {
+function setupBulletinEventListeners() {
     // Login form
-    loginForm.addEventListener('submit', handleLogin);
+    bulletinLoginForm.addEventListener('submit', handleBulletinLogin);
     
-    // Navigation buttons
-    navButtons.forEach(button => {
-        if (button.classList.contains('logout-btn')) {
-            button.addEventListener('click', handleLogout);
-        } else {
-            button.addEventListener('click', handleNavigation);
-        }
-    });
-    
-    // Category filter buttons removed - no longer needed
+    // Logout button
+    bulletinLogoutBtn.addEventListener('click', handleBulletinLogout);
     
     // Post form
-    postForm.addEventListener('submit', handleNewPost);
-    
-    // Material items (for future functionality)
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('.material-item')) {
-            handleMaterialClick(e.target.closest('.material-item'));
-        }
-    });
+    bulletinPostForm.addEventListener('submit', handleBulletinNewPost);
 }
 
 // Authentication Functions
-function handleLogin(e) {
+function handleBulletinLogin(e) {
     e.preventDefault();
     
-    const enteredPassword = passwordInput.value.trim();
+    const enteredPassword = bulletinPasswordInput.value.trim();
     
-    if (enteredPassword === CONFIG.accessPassword) {
+    if (enteredPassword === BULLETIN_CONFIG.accessPassword) {
         // Successful login
-        APP_STATE.isAuthenticated = true;
-        sessionStorage.setItem('authenticated', 'true');
-        showMainApp();
-        clearError();
+        BULLETIN_STATE.isAuthenticated = true;
+        sessionStorage.setItem('bulletin-authenticated', 'true');
+        showBulletinApp();
+        clearBulletinError();
     } else {
         // Failed login
-        showError('Incorrect password. Please contact Dr. Stephen Choi for access.');
-        passwordInput.value = '';
-        passwordInput.focus();
+        showBulletinError('Incorrect password. Please contact Dr. Stephen Choi for access.');
+        bulletinPasswordInput.value = '';
+        bulletinPasswordInput.focus();
     }
 }
 
-function handleLogout() {
-    APP_STATE.isAuthenticated = false;
-    sessionStorage.removeItem('authenticated');
-    showLogin();
-    passwordInput.value = '';
+function handleBulletinLogout() {
+    BULLETIN_STATE.isAuthenticated = false;
+    sessionStorage.removeItem('bulletin-authenticated');
+    showBulletinLogin();
+    bulletinPasswordInput.value = '';
 }
 
-function showLogin() {
-    loginContainer.classList.remove('hidden');
-    mainApp.classList.add('hidden');
-    passwordInput.focus();
+function showBulletinLogin() {
+    bulletinLoginContainer.classList.remove('hidden');
+    bulletinApp.classList.add('hidden');
+    bulletinPasswordInput.focus();
 }
 
-function showMainApp() {
-    loginContainer.classList.add('hidden');
-    mainApp.classList.remove('hidden');
-    showSection('materials');
+function showBulletinApp() {
+    bulletinLoginContainer.classList.add('hidden');
+    bulletinApp.classList.remove('hidden');
 }
 
-function showError(message) {
-    errorMessage.textContent = message;
-    errorMessage.style.display = 'block';
+function showBulletinError(message) {
+    bulletinErrorMessage.textContent = message;
+    bulletinErrorMessage.style.display = 'block';
 }
 
-function clearError() {
-    errorMessage.textContent = '';
-    errorMessage.style.display = 'none';
-}
-
-// Navigation Functions
-function handleNavigation(e) {
-    const targetSection = e.target.closest('.nav-btn').dataset.section;
-    showSection(targetSection);
-}
-
-function showSection(sectionName) {
-    // Update navigation buttons
-    navButtons.forEach(btn => {
-        if (btn.dataset.section === sectionName) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
-        }
-    });
-    
-    // Update content sections
-    contentSections.forEach(section => {
-        if (section.id === `${sectionName}-section`) {
-            section.classList.add('active');
-        } else {
-            section.classList.remove('active');
-        }
-    });
-    
-    APP_STATE.currentSection = sectionName;
+function clearBulletinError() {
+    bulletinErrorMessage.textContent = '';
+    bulletinErrorMessage.style.display = 'none';
 }
 
 // Bulletin Board Functions
-
-function handleNewPost(e) {
+function handleBulletinNewPost(e) {
     e.preventDefault();
     
-    const studentName = document.getElementById('student-name').value.trim();
-    const schoolYear = document.getElementById('school-year').value;
-    const semester = document.getElementById('semester').value;
-    const courseName = document.getElementById('course-name').value.trim();
-    const postTitle = document.getElementById('post-title').value.trim();
-    const postContent = document.getElementById('post-content').value.trim();
+    const studentName = document.getElementById('bulletin-student-name').value.trim();
+    const schoolYear = document.getElementById('bulletin-school-year').value;
+    const semester = document.getElementById('bulletin-semester').value;
+    const courseName = document.getElementById('bulletin-course-name').value.trim();
+    const postTitle = document.getElementById('bulletin-post-title').value.trim();
+    const postContent = document.getElementById('bulletin-post-content').value.trim();
     
     if (!studentName || !schoolYear || !semester || !courseName || !postContent) {
         alert('Please fill in all required fields: name, school year, semester, course name, and message.');
@@ -227,31 +178,31 @@ function handleNewPost(e) {
     };
     
     // Add to posts array (at the beginning for newest first)
-    APP_STATE.posts.unshift(newPost);
+    BULLETIN_STATE.posts.unshift(newPost);
     
     // Clear form
-    document.getElementById('student-name').value = '';
-    document.getElementById('school-year').value = '';
-    document.getElementById('semester').value = '';
-    document.getElementById('course-name').value = '';
-    document.getElementById('post-title').value = '';
-    document.getElementById('post-content').value = '';
+    document.getElementById('bulletin-student-name').value = '';
+    document.getElementById('bulletin-school-year').value = '';
+    document.getElementById('bulletin-semester').value = '';
+    document.getElementById('bulletin-course-name').value = '';
+    document.getElementById('bulletin-post-title').value = '';
+    document.getElementById('bulletin-post-content').value = '';
     
     // Re-render posts
-    renderPosts();
+    renderBulletinPosts();
     
     // Show success message
-    showPostSuccess();
+    showBulletinPostSuccess();
 }
 
-function renderPosts() {
-    postsContainer.innerHTML = '';
+function renderBulletinPosts() {
+    bulletinPostsContainer.innerHTML = '';
     
     // Update posts count
-    updatePostsCount(APP_STATE.posts.length, APP_STATE.posts.length);
+    updateBulletinPostsCount(BULLETIN_STATE.posts.length);
     
-    if (APP_STATE.posts.length === 0) {
-        postsContainer.innerHTML = `
+    if (BULLETIN_STATE.posts.length === 0) {
+        bulletinPostsContainer.innerHTML = `
             <div class="no-posts-category">
                 <i class="fas fa-comments"></i>
                 <p>No messages yet. Be the first to post!</p>
@@ -260,25 +211,23 @@ function renderPosts() {
         return;
     }
     
-    APP_STATE.posts.forEach(post => {
-        const postElement = createPostElement(post);
-        postsContainer.appendChild(postElement);
+    BULLETIN_STATE.posts.forEach(post => {
+        const postElement = createBulletinPostElement(post);
+        bulletinPostsContainer.appendChild(postElement);
     });
 }
 
-function updatePostsCount(filtered, total) {
-    if (postsCount) {
-        postsCount.textContent = `${total} message${total !== 1 ? 's' : ''} posted`;
+function updateBulletinPostsCount(total) {
+    if (bulletinPostsCount) {
+        bulletinPostsCount.textContent = `${total} message${total !== 1 ? 's' : ''} posted`;
     }
 }
 
-// Category display function removed - no longer needed
-
-function createPostElement(post) {
+function createBulletinPostElement(post) {
     const postDiv = document.createElement('div');
     postDiv.className = 'post';
     
-    const formattedDate = formatDate(post.timestamp);
+    const formattedDate = formatBulletinDate(post.timestamp);
     const titleHtml = post.title ? `<div class="post-title">${escapeHtml(post.title)}</div>` : '';
     
     // Create course info display
@@ -301,7 +250,7 @@ function createPostElement(post) {
     return postDiv;
 }
 
-function formatDate(date) {
+function formatBulletinDate(date) {
     const now = new Date();
     const diffInHours = (now - date) / (1000 * 60 * 60);
     
@@ -314,7 +263,7 @@ function formatDate(date) {
     }
 }
 
-function showPostSuccess() {
+function showBulletinPostSuccess() {
     // Create temporary success message
     const successDiv = document.createElement('div');
     successDiv.className = 'success-message';
@@ -343,15 +292,6 @@ function showPostSuccess() {
     }, 3000);
 }
 
-// Material Functions
-function handleMaterialClick(materialItem) {
-    const materialInfo = materialItem.querySelector('.material-info h4').textContent;
-    
-    // For now, just show an alert. In a real implementation, 
-    // this would open the actual file or navigate to the content
-    alert(`Opening: ${materialInfo}\n\nIn a full implementation, this would open the actual course material.`);
-}
-
 // Utility Functions
 function escapeHtml(text) {
     const div = document.createElement('div');
@@ -371,13 +311,6 @@ style.textContent = `
             opacity: 1;
             transform: translateX(0);
         }
-    }
-    
-    .no-posts {
-        text-align: center;
-        padding: 3rem;
-        color: #666;
-        font-style: italic;
     }
 `;
 document.head.appendChild(style);

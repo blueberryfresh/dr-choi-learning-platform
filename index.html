@@ -44,8 +44,8 @@
                     Course Materials
                 </button>
                 <button class="nav-btn" data-section="bulletin">
-                    <i class="fas fa-heart"></i>
-                    Student Chat
+                    <i class="fas fa-clipboard"></i>
+                    Bulletin Board
                 </button>
                 <button class="nav-btn logout-btn">
                     <i class="fas fa-sign-out-alt"></i>
@@ -157,36 +157,11 @@
         <!-- Bulletin Board Section -->
         <section id="bulletin-section" class="content-section">
             <div class="section-header">
-                <h2><i class="fas fa-heart"></i> Student Chat with Dr. Choi</h2>
-                <p>Drop me your thoughts, cool ideas, questions, or just say hi! 😊</p>
+                <h2><i class="fas fa-clipboard"></i> Student Bulletin Board</h2>
+                <p>Share your messages and connect with Dr. Choi</p>
             </div>
 
             <div class="bulletin-container">
-                <!-- Category Filter -->
-                <div class="category-filter">
-                    <h3><i class="fas fa-tags"></i> What's on your mind?</h3>
-                    <div class="category-buttons">
-                        <button class="category-btn active" data-category="all">
-                            <i class="fas fa-comments"></i> Everything
-                        </button>
-                        <button class="category-btn" data-category="course-chat">
-                            <i class="fas fa-graduation-cap"></i> Course Chat
-                        </button>
-                        <button class="category-btn" data-category="cool-stuff">
-                            <i class="fas fa-star"></i> Cool AI Stuff
-                        </button>
-                        <button class="category-btn" data-category="help-me">
-                            <i class="fas fa-hands-helping"></i> Help Me Out
-                        </button>
-                        <button class="category-btn" data-category="random-thoughts">
-                            <i class="fas fa-lightbulb"></i> Random Thoughts
-                        </button>
-                        <button class="category-btn" data-category="just-saying-hi">
-                            <i class="fas fa-wave-hand"></i> Just Saying Hi
-                        </button>
-                    </div>
-                </div>
-
                 <!-- Post Form -->
                 <div class="post-form-container">
                     <h3><i class="fas fa-edit"></i> Drop a Message for Dr. Choi!</h3>
@@ -194,31 +169,45 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="student-name">Your Name</label>
-                                <input type="text" id="student-name" placeholder="What should I call you?" required>
+                                <input type="text" id="student-name" placeholder="Enter your name" required>
                             </div>
                             <div class="form-group">
-                                <label for="post-category">Vibe Check</label>
-                                <select id="post-category" required>
-                                    <option value="">What's this about?</option>
-                                    <option value="course-chat">Course Chat</option>
-                                    <option value="cool-stuff">Cool AI Stuff</option>
-                                    <option value="help-me">Help Me Out</option>
-                                    <option value="random-thoughts">Random Thoughts</option>
-                                    <option value="just-saying-hi">Just Saying Hi</option>
+                                <label for="school-year">School Year</label>
+                                <select id="school-year" required>
+                                    <option value="">Select school year</option>
+                                    <option value="2024-2025">2024-2025</option>
+                                    <option value="2023-2024">2023-2024</option>
+                                    <option value="2022-2023">2022-2023</option>
+                                    <option value="2021-2022">2021-2022</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="semester">Semester</label>
+                                <select id="semester" required>
+                                    <option value="">Select semester</option>
+                                    <option value="Fall">Fall</option>
+                                    <option value="Spring">Spring</option>
+                                    <option value="Summer">Summer</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="course-name">Course Name</label>
+                                <input type="text" id="course-name" placeholder="e.g., CS 175 - Artificial Intelligence" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="post-title">Subject (Optional)</label>
-                            <input type="text" id="post-title" placeholder="What's this about? (optional)">
+                            <input type="text" id="post-title" placeholder="Brief subject for your message">
                         </div>
                         <div class="form-group">
                             <label for="post-content">Your Message</label>
-                            <textarea id="post-content" placeholder="Hey Dr. Choi! Share whatever's on your mind - questions, cool discoveries, random thoughts, or just drop by to say hello! 🚀" required></textarea>
+                            <textarea id="post-content" placeholder="Share your thoughts, questions, feedback, or any message for Dr. Choi..." required></textarea>
                         </div>
                         <button type="submit" class="post-btn">
                             <i class="fas fa-paper-plane"></i>
-                            Send Message
+                            Post Message
                         </button>
                     </form>
                 </div>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Stephen Choi - Student Bulletin Board</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Screen for Bulletin Board -->
+    <div id="bulletin-login-container" class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <i class="fas fa-clipboard"></i>
+                <h1>Dr. Stephen Choi</h1>
+                <h2>Student Bulletin Board</h2>
+            </div>
+            <form id="bulletin-login-form" class="login-form">
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="bulletin-password" placeholder="Enter bulletin board password" required>
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Access Bulletin Board
+                </button>
+            </form>
+            <div id="bulletin-error-message" class="error-message"></div>
+        </div>
+    </div>
+
+    <!-- Bulletin Board Application -->
+    <div id="bulletin-app" class="main-app hidden">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <i class="fas fa-clipboard"></i>
+                <span>Dr. Stephen Choi - Student Bulletin Board</span>
+            </div>
+            <div class="nav-menu">
+                <button class="nav-btn logout-btn" id="bulletin-logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- Bulletin Board Section -->
+        <section class="content-section active">
+            <div class="section-header">
+                <h2><i class="fas fa-clipboard"></i> Student Bulletin Board</h2>
+                <p>Share your messages and connect with Dr. Choi</p>
+            </div>
+
+            <div class="bulletin-container">
+                <!-- Post Form -->
+                <div class="post-form-container">
+                    <h3><i class="fas fa-edit"></i> Drop a Message for Dr. Choi!</h3>
+                    <form id="bulletin-post-form" class="post-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bulletin-student-name">Your Name</label>
+                                <input type="text" id="bulletin-student-name" placeholder="Enter your name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="bulletin-school-year">School Year</label>
+                                <select id="bulletin-school-year" required>
+                                    <option value="">Select school year</option>
+                                    <option value="2024-2025">2024-2025</option>
+                                    <option value="2023-2024">2023-2024</option>
+                                    <option value="2022-2023">2022-2023</option>
+                                    <option value="2021-2022">2021-2022</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bulletin-semester">Semester</label>
+                                <select id="bulletin-semester" required>
+                                    <option value="">Select semester</option>
+                                    <option value="Fall">Fall</option>
+                                    <option value="Spring">Spring</option>
+                                    <option value="Summer">Summer</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="bulletin-course-name">Course Name</label>
+                                <input type="text" id="bulletin-course-name" placeholder="e.g., CS 175 - Artificial Intelligence" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="bulletin-post-title">Subject (Optional)</label>
+                            <input type="text" id="bulletin-post-title" placeholder="Brief subject for your message">
+                        </div>
+                        <div class="form-group">
+                            <label for="bulletin-post-content">Your Message</label>
+                            <textarea id="bulletin-post-content" placeholder="Share your thoughts, questions, feedback, or any message for Dr. Choi..." required></textarea>
+                        </div>
+                        <button type="submit" class="post-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            Post Message
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Posts Container -->
+                <div class="posts-header">
+                    <h3><i class="fas fa-chat-dots"></i> Recent Messages</h3>
+                    <div class="posts-stats">
+                        <span id="bulletin-posts-count">Loading messages...</span>
+                    </div>
+                </div>
+                <div class="posts-container" id="bulletin-posts-container">
+                    <!-- Student messages will be loaded here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="bulletin-script.js"></script>
+</body>
+</html>
